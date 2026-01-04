@@ -9,15 +9,15 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 hover:shadow-xl hover:scale-105",
+        default: "bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 hover:shadow-xl hover:scale-[1.02]",
         destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
-        outline: "border-2 border-primary text-primary bg-transparent hover:bg-primary hover:text-primary-foreground",
+        outline: "border-2 border-primary text-primary bg-transparent hover:bg-primary hover:text-primary-foreground hover:scale-[1.02]",
         secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        ghost: "text-foreground hover:bg-accent hover:text-accent-foreground",
+        ghost: "text-foreground hover:bg-accent/10 hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        hero: "bg-primary text-primary-foreground shadow-lg hover:shadow-[0_0_30px_10px_hsl(24_100%_50%/0.4)] hover:scale-105",
-        heroOutline: "border-2 border-primary text-primary bg-transparent hover:bg-primary/10 hover:shadow-[0_0_20px_5px_hsl(24_100%_50%/0.2)]",
-        glow: "bg-primary text-primary-foreground shadow-[0_0_20px_5px_hsl(24_100%_50%/0.3)] hover:shadow-[0_0_40px_15px_hsl(24_100%_50%/0.5)] hover:scale-105",
+        hero: "relative overflow-hidden bg-primary text-primary-foreground shadow-glow hover:shadow-glow-lg hover:scale-[1.03] transition-all duration-300",
+        heroOutline: "border-2 border-primary/50 text-primary bg-transparent hover:bg-primary/10 hover:border-primary hover:shadow-glow-sm hover:scale-[1.02] transition-all duration-300",
+        glow: "bg-primary/10 text-primary border border-primary/30 hover:bg-primary/20 hover:border-primary/50 shadow-glow-sm hover:shadow-glow transition-all duration-300",
       },
       size: {
         default: "h-11 px-6 py-2",
