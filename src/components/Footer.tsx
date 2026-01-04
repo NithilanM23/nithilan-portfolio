@@ -20,7 +20,7 @@ const Footer = () => {
               Nithilan <span className="text-primary">M</span>
             </a>
             <p className="text-muted-foreground text-sm mt-2 flex items-center gap-1 justify-center md:justify-start">
-              Built with <Heart className="w-4 h-4 text-primary fill-primary" /> © {currentYear}
+               © {currentYear}
             </p>
           </motion.div>
 
