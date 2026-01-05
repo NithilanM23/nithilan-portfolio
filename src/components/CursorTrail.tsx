@@ -3,7 +3,7 @@ import { useEffect, useRef, useCallback } from "react";
 interface TrailPoint {
   x: number;
   y: number;
-  opacity: number;
+  size: number;
   timestamp: number;
 }
 
@@ -12,43 +12,61 @@ const CursorTrail = () => {
   const trailRef = useRef<TrailPoint[]>([]);
   const animationRef = useRef<number>(0);
   const lastPosRef = useRef({ x: 0, y: 0 });
-  const isMovingRef = useRef(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const animate = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
     const now = Date.now();
     
-    // Clear canvas
+    // Clear with slight fade for smoother trail
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Update and draw trail points
-    trailRef.current = trailRef.current.filter((point) => {
+    // Draw trail points from oldest to newest
+    trailRef.current = trailRef.current.filter((point, index) => {
       const age = now - point.timestamp;
-      const maxAge = 150; // Fade within 150ms
+      const maxAge = 120; // Very fast fade ~120ms
       
       if (age > maxAge) return false;
 
-      const opacity = Math.max(0, 1 - age / maxAge) * 0.25;
-      const size = Math.max(1, 4 * (1 - age / maxAge));
+      // Eased opacity falloff for glassy feel
+      const lifeProgress = age / maxAge;
+      const easedProgress = 1 - Math.pow(1 - lifeProgress, 2);
+      const baseOpacity = 0.12 * (1 - easedProgress);
+      
+      // Size shrinks as it fades
+      const size = point.size * (1 - easedProgress * 0.6);
 
-      // Draw soft glowing point
-      const gradient = ctx.createRadialGradient(
+      // Create multi-layer soft glow for glassy effect
+      // Outer glow - very soft and diffuse
+      const outerGradient = ctx.createRadialGradient(
         point.x, point.y, 0,
-        point.x, point.y, size * 3
+        point.x, point.y, size * 4
       );
-      gradient.addColorStop(0, `hsla(24, 95%, 53%, ${opacity})`);
-      gradient.addColorStop(0.4, `hsla(24, 95%, 53%, ${opacity * 0.5})`);
-      gradient.addColorStop(1, `hsla(24, 95%, 53%, 0)`);
+      outerGradient.addColorStop(0, `hsla(30, 80%, 70%, ${baseOpacity * 0.3})`);
+      outerGradient.addColorStop(0.5, `hsla(25, 90%, 60%, ${baseOpacity * 0.15})`);
+      outerGradient.addColorStop(1, `hsla(20, 100%, 50%, 0)`);
 
       ctx.beginPath();
-      ctx.arc(point.x, point.y, size * 3, 0, Math.PI * 2);
-      ctx.fillStyle = gradient;
+      ctx.arc(point.x, point.y, size * 4, 0, Math.PI * 2);
+      ctx.fillStyle = outerGradient;
+      ctx.fill();
+
+      // Inner core - brighter, smaller
+      const innerGradient = ctx.createRadialGradient(
+        point.x, point.y, 0,
+        point.x, point.y, size * 1.5
+      );
+      innerGradient.addColorStop(0, `hsla(35, 100%, 85%, ${baseOpacity * 0.8})`);
+      innerGradient.addColorStop(0.4, `hsla(28, 95%, 65%, ${baseOpacity * 0.4})`);
+      innerGradient.addColorStop(1, `hsla(24, 90%, 55%, 0)`);
+
+      ctx.beginPath();
+      ctx.arc(point.x, point.y, size * 1.5, 0, Math.PI * 2);
+      ctx.fillStyle = innerGradient;
       ctx.fill();
 
       return true;
@@ -64,8 +82,16 @@ const CursorTrail = () => {
     const updateCanvasSize = () => {
       const parent = canvas.parentElement;
       if (parent) {
-        canvas.width = parent.offsetWidth;
-        canvas.height = parent.offsetHeight;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = parent.offsetWidth * dpr;
+        canvas.height = parent.offsetHeight * dpr;
+        canvas.style.width = `${parent.offsetWidth}px`;
+        canvas.style.height = `${parent.offsetHeight}px`;
+        
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.scale(dpr, dpr);
+        }
       }
     };
 
@@ -77,58 +103,55 @@ const CursorTrail = () => {
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
 
-      // Only add points if mouse moved enough (reduces density)
+      // Calculate velocity for dynamic sizing
       const dx = x - lastPosRef.current.x;
       const dy = y - lastPosRef.current.y;
       const distance = Math.sqrt(dx * dx + dy * dy);
 
-      if (distance > 8) { // Minimum distance between points
+      // Only add points with minimum spacing
+      if (distance > 6) {
+        // Size varies slightly with speed for organic feel
+        const speed = Math.min(distance, 40);
+        const size = 2 + (speed / 40) * 2;
+
         trailRef.current.push({
           x,
           y,
-          opacity: 1,
+          size,
           timestamp: Date.now(),
         });
 
-        // Limit trail length for performance
-        if (trailRef.current.length > 20) {
+        // Keep trail short for performance
+        if (trailRef.current.length > 15) {
           trailRef.current.shift();
         }
 
         lastPosRef.current = { x, y };
       }
-
-      isMovingRef.current = true;
-
-      // Clear existing timeout
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-
-      // Set moving to false after cursor stops
-      timeoutRef.current = setTimeout(() => {
-        isMovingRef.current = false;
-      }, 50);
     };
 
-    canvas.addEventListener("mousemove", handleMouseMove);
+    // Use parent element for mouse tracking
+    const parent = canvas.parentElement;
+    if (parent) {
+      parent.addEventListener("mousemove", handleMouseMove);
+    }
+    
     animationRef.current = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener("resize", updateCanvasSize);
-      canvas.removeEventListener("mousemove", handleMouseMove);
-      cancelAnimationFrame(animationRef.current);
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
+      if (parent) {
+        parent.removeEventListener("mousemove", handleMouseMove);
       }
+      cancelAnimationFrame(animationRef.current);
     };
   }, [animate]);
 
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 pointer-events-none z-20"
-      style={{ pointerEvents: "none" }}
+      className="absolute inset-0 pointer-events-none z-20 hidden md:block"
+      aria-hidden="true"
     />
   );
 };
