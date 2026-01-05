@@ -88,7 +88,7 @@ const HeroSection = () => {
   return (
     <section ref={sectionRef} id="home" className="min-h-screen flex items-center relative overflow-hidden pt-20">
       {/* Cursor Trail Effect */}
-      <CursorTrail />
+      {/* <CursorTrail /> */}
       
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/10" />
@@ -129,7 +129,9 @@ const HeroSection = () => {
         transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
         className="absolute bottom-40 left-24 w-20 h-20 border border-primary/10 rounded-lg opacity-20 hidden lg:block"
       />
-
+      
+      <CursorTrail />
+      
       <motion.div 
         style={{ opacity, y, scale }}
         className="section-container relative z-10"
