@@ -150,7 +150,7 @@ const CursorTrail = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 pointer-events-none z-20 hidden md:block"
+      className="absolute inset-0 pointer-events-none z-30"
       aria-hidden="true"
     />
   );
