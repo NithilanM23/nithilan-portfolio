@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Send, ChevronDown, GraduationCap, Trophy, Award } from "lucide-react";
 import { Button } from "./ui/button";
 import { useRef, useEffect, useState } from "react";
+import CursorTrail from "./CursorTrail";
 
 // Animated counter hook
 const useCounter = (end: number, duration: number = 2000, decimals: number = 0) => {
@@ -86,6 +87,9 @@ const HeroSection = () => {
 
   return (
     <section ref={sectionRef} id="home" className="min-h-screen flex items-center relative overflow-hidden pt-20">
+      {/* Cursor Trail Effect */}
+      <CursorTrail />
+      
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/10" />
       
@@ -180,19 +184,15 @@ const HeroSection = () => {
           >
             <span>AI & DATA</span>
             <br />
-            <motion.span 
-              className="text-gradient relative inline-block"
-              animate={{ y: [0, -4, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            <span 
+              className="text-gradient relative inline-block animate-float-smooth"
             >
               SCIENTIST
               {/* Glow effect behind SCIENTIST */}
-              <motion.span 
-                className="absolute -inset-4 bg-gradient-to-r from-primary/30 via-primary/50 to-primary/30 blur-3xl -z-10 rounded-lg"
-                animate={{ opacity: [0.4, 0.7, 0.4], scale: [1, 1.05, 1] }}
-                transition={{ duration: 3, repeat: Infinity }}
+              <span 
+                className="absolute -inset-4 bg-gradient-to-r from-primary/30 via-primary/50 to-primary/30 blur-3xl -z-10 rounded-lg animate-glow-pulse"
               />
-            </motion.span>
+            </span>
           </motion.h1>
 
           {/* Description */}
