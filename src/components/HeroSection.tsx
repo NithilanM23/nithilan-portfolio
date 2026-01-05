@@ -178,7 +178,7 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.5 }}
           >
-            <span>DATA</span>
+            <span>AI & DATA</span>
             <br />
             <motion.span 
               className="text-gradient relative inline-block"
