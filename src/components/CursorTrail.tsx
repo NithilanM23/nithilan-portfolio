@@ -147,16 +147,10 @@ const CursorTrail = () => {
     };
   }, [animate]);
 
-  return (
+return (
   <canvas
     ref={canvasRef}
-    style={{
-      position: "fixed",
-      inset: 0,
-      zIndex: 9999,
-      pointerEvents: "none",
-      background: "rgba(255,0,0,0.03)" // light red just to confirm visibility
-    }}
+    className="absolute inset-0 pointer-events-none z-20"
     aria-hidden="true"
   />
 );
