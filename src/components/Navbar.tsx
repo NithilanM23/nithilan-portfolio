@@ -4,6 +4,7 @@ import { Menu, X, Download, ChevronRight } from "lucide-react";
 import { Button } from "./ui/button";
 
 const navLinks = [
+  { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
   { name: "Skills", href: "#skills" },
   { name: "Experience", href: "#experience" },
