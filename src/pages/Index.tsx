@@ -9,9 +9,9 @@ import ServicesSection from "@/components/ServicesSection";
 import ContactSection from "@/components/ContactSection";
 import ContactSectionMinimal from "@/components/ContactSectionMinimal";
 import Footer from "@/components/Footer";
-import { ViewModeProvider, useViewMode } from "@/contexts/ViewModeContext";
+import { useViewMode } from "@/contexts/ViewModeContext";
 
-const IndexContent = () => {
+const Index = () => {
   const { isRecruiterMode } = useViewMode();
 
   return (
@@ -40,14 +40,6 @@ const IndexContent = () => {
         <Footer />
       </div>
     </>
-  );
-};
-
-const Index = () => {
-  return (
-    <ViewModeProvider>
-      <IndexContent />
-    </ViewModeProvider>
   );
 };
 
