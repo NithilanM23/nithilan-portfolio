@@ -7,9 +7,13 @@ import ExperienceSection from "@/components/ExperienceSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import ServicesSection from "@/components/ServicesSection";
 import ContactSection from "@/components/ContactSection";
+import ContactSectionMinimal from "@/components/ContactSectionMinimal";
 import Footer from "@/components/Footer";
+import { ViewModeProvider, useViewMode } from "@/contexts/ViewModeContext";
 
-const Index = () => {
+const IndexContent = () => {
+  const { isRecruiterMode } = useViewMode();
+
   return (
     <>
       <Helmet>
@@ -25,17 +29,25 @@ const Index = () => {
       <div className="min-h-screen bg-background">
         <Navbar />
         <main>
-          <HeroSection />
-          <AboutSection />
+          {!isRecruiterMode && <HeroSection />}
+          {!isRecruiterMode && <AboutSection />}
           <SkillsSection />
           <ExperienceSection />
           <ProjectsSection />
-          <ServicesSection />
-          <ContactSection />
+          {!isRecruiterMode && <ServicesSection />}
+          {isRecruiterMode ? <ContactSectionMinimal /> : <ContactSection />}
         </main>
         <Footer />
       </div>
     </>
+  );
+};
+
+const Index = () => {
+  return (
+    <ViewModeProvider>
+      <IndexContent />
+    </ViewModeProvider>
   );
 };
 
