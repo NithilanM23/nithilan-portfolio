@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { ArrowRight, Send, ChevronDown, GraduationCap, Trophy, Award } from "lucide-react";
 import { Button } from "./ui/button";
 import { useRef, useEffect, useState } from "react";
@@ -37,6 +37,92 @@ const useCounter = (end: number, duration: number = 2000, decimals: number = 0) 
   }, [end, duration, decimals, hasAnimated]);
 
   return count;
+};
+
+// Typing animation hook for rotating text
+const useTypingRotation = (phrases: string[], typingSpeed: number = 80, pauseDuration: number = 2000) => {
+  const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
+  const [displayText, setDisplayText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentPhrase = phrases[currentPhraseIndex];
+    
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        if (displayText.length < currentPhrase.length) {
+          setDisplayText(currentPhrase.slice(0, displayText.length + 1));
+        } else {
+          setTimeout(() => setIsDeleting(true), pauseDuration);
+        }
+      } else {
+        if (displayText.length > 0) {
+          setDisplayText(displayText.slice(0, -1));
+        } else {
+          setIsDeleting(false);
+          setCurrentPhraseIndex((prev) => (prev + 1) % phrases.length);
+        }
+      }
+    }, isDeleting ? typingSpeed / 2 : typingSpeed);
+
+    return () => clearTimeout(timeout);
+  }, [displayText, isDeleting, currentPhraseIndex, phrases, typingSpeed, pauseDuration]);
+
+  return displayText;
+};
+
+// Role badge with hover state
+const RoleBadge = () => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <motion.div 
+      className="flex items-center justify-center mb-6"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, delay: 0.3 }}
+    >
+      <span 
+        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium tracking-premium cursor-default transition-all duration-300 hover:bg-primary/15 hover:border-primary/30"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+        <AnimatePresence mode="wait">
+          <motion.span
+            key={isHovered ? "hover" : "default"}
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -5 }}
+            transition={{ duration: 0.2 }}
+          >
+            {isHovered ? "Engineer who ships, not just experiments" : "AI & Data Science Engineer"}
+          </motion.span>
+        </AnimatePresence>
+      </span>
+    </motion.div>
+  );
+};
+
+// Typing tagline component
+const TypingTagline = () => {
+  const phrases = ["LLM Systems", "RAG Architectures", "Production AI", "Real-World Data"];
+  const displayText = useTypingRotation(phrases, 70, 2500);
+
+  return (
+    <motion.div 
+      className="text-muted-foreground text-base md:text-lg mb-10 max-w-xl mx-auto leading-relaxed-premium flex items-center justify-center gap-2"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8, delay: 0.9 }}
+    >
+      <span>Focused on</span>
+      <span className="text-primary font-medium min-w-[180px] text-left">
+        {displayText}
+        <span className="animate-pulse ml-0.5">|</span>
+      </span>
+    </motion.div>
+  );
 };
 
 const HeroSection = () => {
@@ -142,18 +228,8 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-3xl mx-auto text-center"
         >
-          {/* Badge */}
-          <motion.div 
-            className="flex items-center justify-center mb-6"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium tracking-premium">
-              <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-              AI & Data Science Engineer
-            </span>
-          </motion.div>
+          {/* Role Badge with hover interaction */}
+          <RoleBadge />
 
           {/* Name intro */}
           <motion.div 
@@ -197,18 +273,18 @@ const HeroSection = () => {
             </span>
           </motion.h1>
 
-          {/* Description */}
+          {/* Personal one-liner */}
           <motion.p 
-            className="text-muted-foreground text-lg md:text-xl mb-10 max-w-xl mx-auto leading-relaxed-premium"
+            className="text-foreground/90 text-lg md:text-xl mb-4 max-w-xl mx-auto leading-relaxed-premium font-medium"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.7 }}
           >
-            Building practical AI systems with{' '}
-            <span className="text-foreground font-medium">LLMs</span>,{' '}
-            <span className="text-foreground font-medium">RAG Systems</span>, and{' '}
-            <span className="text-foreground font-medium">Data Analytics</span>
+            "I turn real-world data into AI systems people actually use."
           </motion.p>
+
+          {/* Typing animation for focus areas */}
+          <TypingTagline />
 
           {/* CTA Buttons */}
           <motion.div 
