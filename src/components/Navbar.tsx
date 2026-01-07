@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Download, ChevronRight } from "lucide-react";
 import { Button } from "./ui/button";
+import ViewModeToggle from "./ViewModeToggle";
+import { useViewMode } from "@/contexts/ViewModeContext";
 
-const navLinks = [
+const fullNavLinks = [
   { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
   { name: "Skills", href: "#skills" },
@@ -13,10 +15,20 @@ const navLinks = [
   { name: "Contact", href: "#contact" },
 ];
 
+const recruiterNavLinks = [
+  { name: "Skills", href: "#skills" },
+  { name: "Experience", href: "#experience" },
+  { name: "Projects", href: "#projects" },
+  { name: "Contact", href: "#contact" },
+];
+
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const { isRecruiterMode } = useViewMode();
+
+  const navLinks = isRecruiterMode ? recruiterNavLinks : fullNavLinks;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,7 +54,7 @@ const Navbar = () => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [navLinks]);
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -111,22 +123,24 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <motion.div 
-            className="hidden lg:block"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.6 }}
-          >
-            <Button 
-              variant="heroOutline" 
-              size="sm"
-              className="group tracking-premium"
+          {/* View Mode Toggle & CTA Button */}
+          <div className="hidden lg:flex items-center gap-3">
+            <ViewModeToggle />
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.6 }}
             >
-              <Download className="w-4 h-4 group-hover:animate-bounce" />
-              Resume
-            </Button>
-          </motion.div>
+              <Button 
+                variant="heroOutline" 
+                size="sm"
+                className="group tracking-premium"
+              >
+                <Download className="w-4 h-4 group-hover:animate-bounce" />
+                Resume
+              </Button>
+            </motion.div>
+          </div>
 
           {/* Mobile Menu Button */}
           <motion.button
