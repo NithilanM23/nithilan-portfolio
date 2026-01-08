@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
@@ -10,6 +11,20 @@ import ContactSection from "@/components/ContactSection";
 import ContactSectionMinimal from "@/components/ContactSectionMinimal";
 import Footer from "@/components/Footer";
 import { useViewMode } from "@/contexts/ViewModeContext";
+
+const sectionVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" as const }
+  },
+  exit: { 
+    opacity: 0, 
+    y: -20,
+    transition: { duration: 0.3, ease: "easeIn" as const }
+  }
+};
 
 const Index = () => {
   const { isRecruiterMode } = useViewMode();
@@ -29,13 +44,63 @@ const Index = () => {
       <div className="min-h-screen bg-background">
         <Navbar />
         <main>
-          {!isRecruiterMode && <HeroSection />}
-          {!isRecruiterMode && <AboutSection />}
+          <AnimatePresence mode="wait">
+            {!isRecruiterMode && (
+              <motion.div
+                key="hero"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                <HeroSection />
+              </motion.div>
+            )}
+          </AnimatePresence>
+          
+          <AnimatePresence mode="wait">
+            {!isRecruiterMode && (
+              <motion.div
+                key="about"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                <AboutSection />
+              </motion.div>
+            )}
+          </AnimatePresence>
+          
           <SkillsSection />
           <ExperienceSection />
           <ProjectsSection />
-          {!isRecruiterMode && <ServicesSection />}
-          {isRecruiterMode ? <ContactSectionMinimal /> : <ContactSection />}
+          
+          <AnimatePresence mode="wait">
+            {!isRecruiterMode && (
+              <motion.div
+                key="services"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+              >
+                <ServicesSection />
+              </motion.div>
+            )}
+          </AnimatePresence>
+          
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={isRecruiterMode ? "contact-minimal" : "contact-full"}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+            >
+              {isRecruiterMode ? <ContactSectionMinimal /> : <ContactSection />}
+            </motion.div>
+          </AnimatePresence>
         </main>
         <Footer />
       </div>
