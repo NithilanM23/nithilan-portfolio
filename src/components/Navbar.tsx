@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Download, ChevronRight } from "lucide-react";
 import { Button } from "./ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import ViewModeToggle from "./ViewModeToggle";
 import { useViewMode } from "@/contexts/ViewModeContext";
 
@@ -128,22 +129,29 @@ const Navbar = () => {
           {/* View Mode Toggle & Resume Button - Right */}
           <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
             <ViewModeToggle />
-            <motion.a
-              href="/resume.pdf"
-              download
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.6 }}
-              className="group relative flex items-center justify-center h-9 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary hover:border-primary overflow-hidden transition-colors duration-300"
-              style={{ width: 36 }}
-              whileHover={{ width: 110 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Download className="w-4 h-4 text-primary group-hover:text-primary-foreground transition-colors duration-300 flex-shrink-0 absolute left-[10px]" />
-              <span className="text-xs font-medium text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-100 whitespace-nowrap ml-6">
-                Resume
-              </span>
-            </motion.a>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <motion.a
+                  href="/resume.pdf"
+                  download
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.6 }}
+                  className="group relative flex items-center justify-center h-9 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary hover:border-primary overflow-hidden transition-colors duration-300"
+                  style={{ width: 36 }}
+                  whileHover={{ width: 110 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Download className="w-4 h-4 text-primary group-hover:text-primary-foreground transition-colors duration-300 flex-shrink-0 absolute left-[10px]" />
+                  <span className="text-xs font-medium text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-100 whitespace-nowrap ml-6">
+                    Resume
+                  </span>
+                </motion.a>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" className="text-xs">
+                Download Resume
+              </TooltipContent>
+            </Tooltip>
           </div>
 
           {/* Mobile Menu Button */}
