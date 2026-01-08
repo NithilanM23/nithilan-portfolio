@@ -84,7 +84,7 @@ const Navbar = () => {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className="text-xl font-bold text-foreground group"
+            className="text-xl font-bold text-foreground group flex-shrink-0"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -92,39 +92,41 @@ const Navbar = () => {
             <span className="text-primary ml-1 group-hover:text-primary-glow transition-colors duration-300">M</span>
           </motion.a>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link, index) => (
-              <motion.a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection(link.href);
-                }}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.08 + 0.3 }}
-                className={`relative px-4 py-2 text-sm font-medium tracking-premium transition-all duration-300 ${
-                  activeSection === link.href.substring(1)
-                    ? "text-primary"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {link.name}
-                {/* Active indicator */}
-                <motion.span
-                  className="absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-primary rounded-full"
-                  initial={{ width: 0 }}
-                  animate={{ width: activeSection === link.href.substring(1) ? '50%' : 0 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
-                />
-              </motion.a>
-            ))}
+          {/* Desktop Navigation - Centered */}
+          <div className="hidden lg:flex items-center justify-center flex-1">
+            <div className="flex items-center gap-1">
+              {navLinks.map((link, index) => (
+                <motion.a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection(link.href);
+                  }}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.08 + 0.3 }}
+                  className={`relative px-4 py-2 text-sm font-medium tracking-premium transition-all duration-300 ${
+                    activeSection === link.href.substring(1)
+                      ? "text-primary"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {link.name}
+                  {/* Active indicator */}
+                  <motion.span
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-primary rounded-full"
+                    initial={{ width: 0 }}
+                    animate={{ width: activeSection === link.href.substring(1) ? '50%' : 0 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                  />
+                </motion.a>
+              ))}
+            </div>
           </div>
 
-          {/* View Mode Toggle & CTA Button */}
-          <div className="hidden lg:flex items-center gap-3">
+          {/* View Mode Toggle & Resume Button - Right */}
+          <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
             <ViewModeToggle />
             <motion.a
               href="/resume.pdf"
@@ -132,12 +134,13 @@ const Navbar = () => {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.6 }}
-              className="group relative flex items-center justify-center w-9 h-9 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary hover:border-primary transition-all duration-300 overflow-hidden"
+              className="group relative flex items-center justify-center h-9 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary hover:border-primary overflow-hidden transition-colors duration-300"
+              style={{ width: 36 }}
               whileHover={{ width: 110 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Download className="w-4 h-4 text-primary group-hover:text-primary-foreground transition-colors duration-300 flex-shrink-0" />
-              <span className="absolute left-9 text-xs font-medium text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+              <Download className="w-4 h-4 text-primary group-hover:text-primary-foreground transition-colors duration-300 flex-shrink-0 absolute left-[10px]" />
+              <span className="text-xs font-medium text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-100 whitespace-nowrap ml-6">
                 Resume
               </span>
             </motion.a>
