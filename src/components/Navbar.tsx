@@ -126,20 +126,21 @@ const Navbar = () => {
           {/* View Mode Toggle & CTA Button */}
           <div className="hidden lg:flex items-center gap-3">
             <ViewModeToggle />
-            <motion.div
+            <motion.a
+              href="/resume.pdf"
+              download
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.6 }}
+              className="group relative flex items-center justify-center w-9 h-9 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary hover:border-primary transition-all duration-300 overflow-hidden"
+              whileHover={{ width: 110 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <Button 
-                variant="heroOutline" 
-                size="sm"
-                className="group tracking-premium"
-              >
-                <Download className="w-4 h-4 group-hover:animate-bounce" />
+              <Download className="w-4 h-4 text-primary group-hover:text-primary-foreground transition-colors duration-300 flex-shrink-0" />
+              <span className="absolute left-9 text-xs font-medium text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
                 Resume
-              </Button>
-            </motion.div>
+              </span>
+            </motion.a>
           </div>
 
           {/* Mobile Menu Button */}
