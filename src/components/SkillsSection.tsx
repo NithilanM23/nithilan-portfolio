@@ -5,34 +5,101 @@ const skillCategories = [
   {
     icon: Brain,
     title: "AI & Machine Learning",
-    skills: ["Machine Learning", "Deep Learning", "CNNs", "RNNs", "Neural Networks", "Model Training"],
+    skills: [
+      "Machine Learning",
+      "Deep Learning",
+      "Artificial Neural Networks (ANN)",
+      "CNNs",
+      "RNNs",
+      "LSTM",
+      "GRU",
+      "Regression & Classification",
+      "Model Evaluation"
+    ],
     color: "from-orange-500 to-amber-500",
   },
   {
     icon: Layers,
     title: "LLMs & NLP",
-    skills: ["Large Language Models", "RAG Systems", "BERT", "SpaCy", "Text Processing", "Embeddings"],
+    skills: [
+      "Large Language Models (LLMs)",
+      "Retrieval-Augmented Generation (RAG)",
+      "Prompt Engineering",
+      "BERT",
+      "SpaCy",
+      "Embeddings",
+      "Vector Search"
+    ],
     color: "from-amber-500 to-yellow-500",
   },
   {
     icon: Code,
     title: "Programming & Frameworks",
-    skills: ["Python", "SQL", "PyTorch", "Flask", "Django REST", "FastAPI"],
+    skills: [
+      "Python",
+      "SQL",
+      "PyTorch",
+      "TensorFlow / Keras",
+      "Flask",
+      "Django REST Framework",
+      "Streamlit"
+    ],
     color: "from-orange-600 to-orange-400",
   },
   {
     icon: BarChart3,
     title: "Data & Analytics",
-    skills: ["Power BI", "Power Query", "Data Cleaning", "Visualization", "Statistical Analysis", "Insight Generation"],
+    skills: [
+      "Power BI",
+      "Power Query",
+      "OpenRefine",
+      "Data Cleaning",
+      "Exploratory Data Analysis (EDA)",
+      "Data Visualization",
+      "Insight Generation"
+    ],
     color: "from-amber-600 to-orange-500",
   },
   {
     icon: Database,
     title: "Databases & Vector Stores",
-    skills: ["FAISS", "Pinecone", "ChromaDB", "MongoDB", "PostgreSQL", "SQLite"],
+    skills: [
+      "FAISS",
+      "Pinecone",
+      "ChromaDB",
+      "MongoDB",
+      "SQLite",
+      "Vector Databases",
+      "Embedding Indexing"
+    ],
     color: "from-orange-500 to-red-500",
   },
+  {
+    icon: Server,
+    title: "Backend & Deployment",
+    skills: [
+      "REST APIs",
+      "Model Deployment",
+      "API Integration",
+      "Authentication (Token / Session)",
+      "Railway / Render Deployment"
+    ],
+    color: "from-red-500 to-orange-500",
+  },
+  {
+    icon: Workflow,
+    title: "Tools & Platforms",
+    skills: [
+      "Flowise",
+      "N8N",
+      "Langchain",
+      "Git & GitHub",
+      "No-Code AI Pipelines"
+    ],
+    color: "from-orange-400 to-amber-400",
+  },
 ];
+
 
 const SkillsSection = () => {
   return (
