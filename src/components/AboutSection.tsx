@@ -65,7 +65,7 @@ const AboutSection = () => {
                   <h4 className="text-lg font-semibold text-foreground mb-2">Education</h4>
                   <p className="text-foreground font-medium">B.Tech in Artificial Intelligence & Data Science</p>
                   <p className="text-muted-foreground">Shiv Nadar University Chennai (SNUC)</p>
-                  <p className="text-muted-foreground">3rd Year | CGPA: 8.9</p>
+                  <p className="text-muted-foreground">3rd Year | CGPA: 9.0</p>
                 </div>
               </div>
             </div>
