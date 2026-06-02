@@ -11,6 +11,7 @@ const fullNavLinks = [
   { name: "About", href: "#about" },
   { name: "Skills", href: "#skills" },
   { name: "Experience", href: "#experience" },
+  { name: "Research", href: "#research" },
   { name: "Projects", href: "#projects" },
   { name: "Services", href: "#services" },
   { name: "Contact", href: "#contact" },
@@ -19,6 +20,7 @@ const fullNavLinks = [
 const recruiterNavLinks = [
   { name: "Skills", href: "#skills" },
   { name: "Experience", href: "#experience" },
+  { name: "Research", href: "#research" },
   { name: "Projects", href: "#projects" },
   { name: "Contact", href: "#contact" },
 ];
