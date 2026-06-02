@@ -5,10 +5,11 @@ import { Button } from "./ui/button";
 const projects = [
   {
     icon: Bot,
-    title: "RAG Chatbots (PDF & CSV)",
-    description: "Built document-based chatbots using FAISS vector stores and Gemini/LLM integration for intelligent document Q&A.",
-    tech: ["FAISS", "LangChain", "Gemini API", "Python", "Streamlit"],
+    title: "Enterprise RAG System",
+    description: "Enterprise-grade RAG system for internal knowledge base Question & Answering.",
+    tech: ["PostgreSQL", "PGVector", "LangChain", "Ollama", "Python", "Streamlit"],
     color: "from-orange-500 to-amber-500",
+    githubLink: "https://github.com/NithilanM23/Enterprise_RAG",
   },
   {
     icon: BarChart3,
@@ -16,6 +17,7 @@ const projects = [
     description: "ANN-based regression model for Tamil Nadu tomato prices with AI-driven inference explanations for farmers.",
     tech: ["TensorFlow", "Keras", "Python", "Flask", "Pandas"],
     color: "from-amber-500 to-yellow-500",
+    githubLink: "#",
   },
   {
     icon: Brain,
@@ -23,6 +25,7 @@ const projects = [
     description: "NLP-based medical triage and symptom extraction system using SpaCy for patient priority classification.",
     tech: ["SpaCy", "NLP", "Python", "Healthcare AI", "Classification"],
     color: "from-orange-600 to-orange-400",
+    githubLink: "https://github.com/NithilanM23/BERT-Finetuning-For-MedicalData",
   },
   {
     icon: BarChart3,
@@ -30,6 +33,7 @@ const projects = [
     description: "Interactive Power BI dashboard analyzing 500K+ job postings globally with insights on trends and demands.",
     tech: ["Power BI", "Power Query", "Data Visualization", "Analytics"],
     color: "from-amber-600 to-orange-500",
+    githubLink: "https://github.com/NithilanM23/Power-Bi",
   },
   {
     icon: Plane,
@@ -37,13 +41,7 @@ const projects = [
     description: "Forage simulation project involving web scraping, analysis, and ML-based purchase prediction modeling.",
     tech: ["Web Scraping", "ML", "Python", "Scikit-learn", "Analysis"],
     color: "from-orange-500 to-red-500",
-  },
-  {
-    icon: BookOpen,
-    title: "Educational RAG System for CBSE",
-    description: "AI assistant helping students learn from CBSE textbook PDFs with intelligent question answering.",
-    tech: ["RAG", "LLMs", "ChromaDB", "Education Tech", "Python"],
-    color: "from-red-500 to-orange-500",
+    githubLink: "https://github.com/NithilanM23/Airline-Review-System-BA-",
   },
   {
     icon: Flag,
@@ -51,6 +49,8 @@ const projects = [
     description: "End-to-end ML project predicting Formula 1 race finishing positions using historical data.",
     tech: ["Machine Learning", "Python", "Scikit-learn", "Feature Engineering"],
     color: "from-orange-400 to-amber-400",
+    githubLink: "https://github.com/NithilanM23/F1-Predictor",
+    demoLink: "https://f1predictor.onrender.com",
   },
 ];
 
@@ -87,15 +87,15 @@ const ProjectsSection = () => {
               <div className={`w-12 h-12 rounded-lg bg-gradient-to-r ${project.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
                 <project.icon className="w-6 h-6 text-background" />
               </div>
-              
+
               <h3 className="text-xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
                 {project.title}
               </h3>
-              
+
               <p className="text-muted-foreground text-sm mb-4 flex-1">
                 {project.description}
               </p>
-              
+
               <div className="flex flex-wrap gap-2 mb-4">
                 {project.tech.slice(0, 4).map((tech) => (
                   <span
@@ -108,14 +108,16 @@ const ProjectsSection = () => {
               </div>
 
               <div className="flex gap-3 mt-auto">
-                <Button variant="ghost" size="sm" className="flex-1">
-                  <Github className="w-4 h-4" />
+                <Button variant="ghost" size="sm" className="flex-1" onClick={() => window.open(project.githubLink, '_blank')}>
+                  <Github className="w-4 h-4 mr-2" />
                   Code
                 </Button>
-                <Button variant="ghost" size="sm" className="flex-1">
-                  <ExternalLink className="w-4 h-4" />
-                  Demo
-                </Button>
+                {project.demoLink && (
+                  <Button variant="ghost" size="sm" className="flex-1" onClick={() => window.open(project.demoLink, '_blank')}>
+                    <ExternalLink className="w-4 h-4 mr-2" />
+                    Demo
+                  </Button>
+                )}
               </div>
             </motion.div>
           ))}
