@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Mail, Linkedin, Github, MapPin } from "lucide-react";
-import AiCoreAnimation from "./AiCoreAnimation";
+import { ContactVisual } from "./ContactVisual";
 
 const ContactSection = () => {
   const contactLinks = [
@@ -19,8 +19,8 @@ const ContactSection = () => {
     {
       icon: Github,
       label: "GitHub",
-      value: "github.com/MadeForMoney",
-      href: "https://github.com/MadeForMoney",
+      value: "NithilanM23",
+      href: "https://github.com/NithilanM23",
     },
   ];
 
@@ -55,8 +55,8 @@ const ContactSection = () => {
             <div>
               <h3 className="text-2xl font-semibold text-foreground mb-6">Let's Connect</h3>
               <p className="text-muted-foreground leading-relaxed mb-8">
-                I'm always open to discussing new projects, creative ideas, 
-                or opportunities to be part of your vision. Whether you need 
+                I'm always open to discussing new projects, creative ideas,
+                or opportunities to be part of your vision. Whether you need
                 an AI solution, data analysis, or just want to chat about tech!
               </p>
             </div>
@@ -98,9 +98,9 @@ const ContactSection = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
-            className="flex items-center justify-center"
+            className="flex items-center justify-center w-full"
           >
-            <AiCoreAnimation />
+            <ContactVisual />
           </motion.div>
         </div>
       </div>

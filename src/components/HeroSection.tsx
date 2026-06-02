@@ -11,7 +11,7 @@ const useCounter = (end: number, duration: number = 2000, decimals: number = 0) 
 
   useEffect(() => {
     if (hasAnimated) return;
-    
+
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
@@ -32,7 +32,7 @@ const useCounter = (end: number, duration: number = 2000, decimals: number = 0) 
 
     const element = document.getElementById('stats-section');
     if (element) observer.observe(element);
-    
+
     return () => observer.disconnect();
   }, [end, duration, decimals, hasAnimated]);
 
@@ -47,7 +47,7 @@ const useTypingRotation = (phrases: string[], typingSpeed: number = 80, pauseDur
 
   useEffect(() => {
     const currentPhrase = phrases[currentPhraseIndex];
-    
+
     const timeout = setTimeout(() => {
       if (!isDeleting) {
         if (displayText.length < currentPhrase.length) {
@@ -76,13 +76,13 @@ const RoleBadge = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <motion.div 
+    <motion.div
       className="flex items-center justify-center mb-6"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, delay: 0.3 }}
     >
-      <span 
+      <span
         className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium tracking-premium cursor-default transition-all duration-300 hover:bg-primary/15 hover:border-primary/30"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -106,17 +106,34 @@ const RoleBadge = () => {
 
 // Typing tagline component
 const TypingTagline = () => {
-  const phrases = ["LLM Systems", "RAG Architectures", "Production AI", "Real-World Data"];
+  const phrases = [
+    "Finding the racing line through data",
+    "Powered by Data & Downforce",
+    "Training models faster than pit stops",
+    "Building AI at race pace",
+    "Always chasing the next millisecond",
+    "Debugging reality with Python",
+    "Convincing data to behave",
+    "Finding patterns in chaos",
+    "Powered by caffeine and curiosity",
+    "Making statistics look cool",
+    "Teaching machines new tricks",
+    "Making GPUs earn their salary",
+    "Touching grass occasionally",
+    "Prompting responsibly",
+    "Teaching transformers manners",
+    "Currently arguing with a model"
+  ];
   const displayText = useTypingRotation(phrases, 70, 2500);
 
   return (
-    <motion.div 
+    <motion.div
       className="text-muted-foreground text-base md:text-lg mb-10 max-w-xl mx-auto leading-relaxed-premium flex items-center justify-center gap-2"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8, delay: 0.9 }}
     >
-      <span>Focused on</span>
+      <span>I am</span>
       <span className="text-primary font-medium min-w-[180px] text-left">
         {displayText}
         <span className="animate-pulse ml-0.5">|</span>
@@ -148,23 +165,23 @@ const HeroSection = () => {
   const aiRank = useCounter(16, 1800);
 
   const stats = [
-    { 
-      icon: GraduationCap, 
-      value: cgpa, 
-      suffix: '', 
+    {
+      icon: GraduationCap,
+      value: cgpa,
+      suffix: '',
       label: 'CGPA',
       sublabel: 'Academic Score'
     },
-    { 
-      icon: Trophy, 
-      value: llmRank, 
+    {
+      icon: Trophy,
+      value: llmRank,
       prefix: 'AIR ',
       label: 'LLMs Course',
       sublabel: 'All India Rank'
     },
-    { 
-      icon: Award, 
-      value: aiRank, 
+    {
+      icon: Award,
+      value: aiRank,
       prefix: 'AIR ',
       label: 'Responsible AI',
       sublabel: 'All India Rank'
@@ -175,28 +192,28 @@ const HeroSection = () => {
     <section ref={sectionRef} id="home" className="min-h-screen flex items-center relative overflow-hidden pt-20">
       {/* Cursor Trail Effect */}
       {/* <CursorTrail /> */}
-      
+
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/10" />
-      
+
       {/* Animated background orbs */}
-      <motion.div 
+      <motion.div
         className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/15 rounded-full blur-[120px]"
-        animate={{ 
+        animate={{
           scale: [1, 1.2, 1],
           opacity: [0.2, 0.4, 0.2]
         }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
-      <motion.div 
+      <motion.div
         className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[100px]"
-        animate={{ 
+        animate={{
           scale: [1.2, 1, 1.2],
           opacity: [0.15, 0.3, 0.15]
         }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
       />
-      
+
       {/* Subtle grid pattern */}
       <div className="absolute inset-0 opacity-[0.02]" style={{
         backgroundImage: `linear-gradient(hsl(var(--foreground)) 1px, transparent 1px),
@@ -215,10 +232,10 @@ const HeroSection = () => {
         transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
         className="absolute bottom-40 left-24 w-20 h-20 border border-primary/10 rounded-lg opacity-20 hidden lg:block"
       />
-      
+
       <CursorTrail />
-      
-      <motion.div 
+
+      <motion.div
         style={{ opacity, y, scale }}
         className="section-container relative z-10"
       >
@@ -232,20 +249,20 @@ const HeroSection = () => {
           <RoleBadge />
 
           {/* Name intro */}
-          <motion.div 
+          <motion.div
             className="flex items-center justify-center gap-3 mb-4"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <motion.div 
+            <motion.div
               className="w-12 h-0.5 bg-gradient-to-r from-transparent to-primary"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             />
             <span className="text-lg text-muted-foreground italic tracking-wide">I'm Nithilan</span>
-            <motion.div 
+            <motion.div
               className="w-12 h-0.5 bg-gradient-to-l from-transparent to-primary"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
@@ -254,7 +271,7 @@ const HeroSection = () => {
           </motion.div>
 
           {/* Main headline */}
-          <motion.h1 
+          <motion.h1
             className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-foreground mb-6 leading-none tracking-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -262,19 +279,19 @@ const HeroSection = () => {
           >
             <span>AI & DATA</span>
             <br />
-            <span 
+            <span
               className="text-gradient relative inline-block animate-float-smooth"
             >
               SCIENTIST
               {/* Glow effect behind SCIENTIST */}
-              <span 
+              <span
                 className="absolute -inset-4 bg-gradient-to-r from-primary/30 via-primary/50 to-primary/30 blur-3xl -z-10 rounded-lg animate-glow-pulse"
               />
             </span>
           </motion.h1>
 
           {/* Personal one-liner */}
-          <motion.p 
+          <motion.p
             className="text-foreground/90 text-lg md:text-xl mb-4 max-w-xl mx-auto leading-relaxed-premium font-medium"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -287,14 +304,14 @@ const HeroSection = () => {
           <TypingTagline />
 
           {/* CTA Buttons */}
-          <motion.div 
+          <motion.div
             className="flex flex-wrap justify-center gap-4 mb-14"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.9 }}
           >
-            <Button 
-              variant="hero" 
+            <Button
+              variant="hero"
               size="lg"
               onClick={() => scrollToSection('projects')}
               className="group btn-premium"
@@ -302,8 +319,8 @@ const HeroSection = () => {
               View Projects
               <ArrowRight className="w-5 h-5 arrow-animate" />
             </Button>
-            <Button 
-              variant="heroOutline" 
+            <Button
+              variant="heroOutline"
               size="lg"
               onClick={() => scrollToSection('contact')}
               className="group"
@@ -322,7 +339,7 @@ const HeroSection = () => {
             className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto"
           >
             {stats.map((stat, index) => (
-              <motion.div 
+              <motion.div
                 key={stat.label}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -347,7 +364,7 @@ const HeroSection = () => {
       </motion.div>
 
       {/* Scroll indicator */}
-      <motion.div 
+      <motion.div
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
