@@ -87,12 +87,27 @@ const Navbar = () => {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className="text-xl font-bold text-foreground group flex-shrink-0"
+            className="group flex-shrink-0"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            <span className="transition-colors duration-300">Nithilan</span>
-            <span className="text-primary ml-1 group-hover:text-primary-glow transition-colors duration-300">M</span>
+            <div className="flex items-center gap-2">
+              <svg 
+                viewBox="0 0 140 100" 
+                className="w-7 md:w-8 h-auto text-primary drop-shadow-[0_0_4px_rgba(var(--primary),0.3)] transition-transform duration-300 group-hover:scale-105" 
+                fill="currentColor" 
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect x="0" y="0" width="22" height="100" />
+                <rect x="59" y="0" width="22" height="100" />
+                <rect x="118" y="0" width="22" height="100" />
+                <polygon points="0,0 22,0 81,100 59,100" />
+                <polygon points="59,0 81,0 99.5,34.25 118,0 140,0 99.5,75" />
+              </svg>
+              <span className="text-lg font-bold tracking-[0.15em] text-foreground uppercase group-hover:text-primary transition-colors duration-300" style={{ fontFamily: "'Inter', sans-serif" }}>
+                Nithilan <span className="text-primary group-hover:text-primary-glow">M</span>
+              </span>
+            </div>
           </motion.a>
 
           {/* Desktop Navigation - Centered */}
