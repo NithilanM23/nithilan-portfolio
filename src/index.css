@@ -218,4 +218,60 @@
     @apply absolute -bottom-1 left-1/2 -translate-x-1/2 h-0.5 bg-primary rounded-full;
     transition: width 0.3s ease;
   }
+
+  /* Contact section styles */
+  .section-padding {
+    @apply py-24;
+  }
+
+  .label {
+    @apply font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground;
+  }
+
+  .data-panel {
+    /* Panel specific styles if needed */
+  }
+}
+
+@layer utilities {
+  .text-signal { @apply text-primary; }
+  .bg-signal { @apply bg-primary; }
+  .bg-signal\/50 { @apply bg-primary/50; }
+  .bg-signal\/60 { @apply bg-primary/60; }
+  .bg-signal\/70 { @apply bg-primary/70; }
+  .bg-signal\/80 { @apply bg-primary/80; }
+  
+  .text-wire { color: hsl(var(--muted-foreground) / 0.4); }
+  .bg-wire { background-color: hsl(var(--muted-foreground) / 0.4); }
+  .border-wire { border-color: hsl(var(--muted-foreground) / 0.4); }
+  
+  .text-dim { color: hsl(var(--muted-foreground) / 0.8); }
+  .text-muted { @apply text-muted-foreground; }
+  
+  .bg-void { @apply bg-background; }
+  .bg-surface { @apply bg-secondary; }
+  
+  .font-display { @apply font-sans; }
+  
+  .cursor-blink {
+    display: inline-block;
+    width: 6px;
+    height: 12px;
+    background-color: hsl(var(--primary));
+    animation: blink 1s step-end infinite;
+    vertical-align: middle;
+  }
+  
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .5; }
+}
+.animate-pulse-slow {
+  animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
