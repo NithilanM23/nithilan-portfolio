@@ -4,6 +4,9 @@ import { Button } from "./ui/button";
 import { useRef, useEffect, useState } from "react";
 import CursorTrail from "./CursorTrail";
 
+import VariableProximity from "./VariableProximity";
+
+
 // Animated counter hook
 const useCounter = (end: number, duration: number = 2000, decimals: number = 0) => {
   const [count, setCount] = useState(0);
@@ -144,6 +147,7 @@ const TypingTagline = () => {
 
 const HeroSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const [splitTextDone, setSplitTextDone] = useState(false);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"]
@@ -271,34 +275,60 @@ const HeroSection = () => {
           </motion.div>
 
           {/* Main headline */}
-          <motion.h1
-            className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-foreground mb-6 leading-none tracking-tight"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.5 }}
-          >
-            <span>AI & DATA</span>
-            <br />
-            <span
-              className="text-gradient relative inline-block animate-float-smooth"
-            >
-              SCIENTIST
-              {/* Glow effect behind SCIENTIST */}
-              <span
-                className="absolute -inset-4 bg-gradient-to-r from-primary/30 via-primary/50 to-primary/30 blur-3xl -z-10 rounded-lg animate-glow-pulse"
+          <div className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-foreground mb-6 leading-none tracking-tight flex flex-col items-center justify-center variable-proximity">
+            <VariableProximity
+              label="AI & DATA"
+              className="inline-block cursor-default"
+              fromFontVariationSettings="'wght' 700, 'opsz' 9"
+              toFontVariationSettings="'wght' 1000, 'opsz' 40"
+              containerRef={sectionRef}
+              radius={150}
+              falloff="linear"
+              animateIn={true}
+              staggerDelay={0.03}
+              animationDelay={0.5}
+              enableHover={splitTextDone}
+            />
+            <span className="relative inline-block animate-float-smooth mt-2">
+              <VariableProximity
+                label="SCIENTIST"
+                className="inline-block cursor-default"
+                fromFontVariationSettings="'wght' 700, 'opsz' 9"
+                toFontVariationSettings="'wght' 1000, 'opsz' 40"
+                containerRef={sectionRef}
+                radius={150}
+                falloff="linear"
+                animateIn={true}
+                staggerDelay={0.03}
+                animationDelay={0.71}
+                enableHover={splitTextDone}
+                letterClassName="text-gradient"
+                onAnimationComplete={() => {
+                  setTimeout(() => setSplitTextDone(true), 100);
+                }}
               />
+              {/* Glow effect behind SCIENTIST */}
+              <span className="absolute -inset-4 bg-gradient-to-r from-primary/30 via-primary/50 to-primary/30 blur-3xl -z-10 rounded-lg animate-glow-pulse pointer-events-none" />
             </span>
-          </motion.h1>
+          </div>
 
           {/* Personal one-liner */}
-          <motion.p
-            className="text-foreground/90 text-lg md:text-xl mb-4 max-w-xl mx-auto leading-relaxed-premium font-medium"
+          <motion.div
+            className="text-foreground/90 text-lg md:text-xl mb-4 max-w-xl mx-auto leading-relaxed-premium font-medium cursor-default"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.7 }}
           >
-            "I turn real-world data into AI systems people actually use."
-          </motion.p>
+            <VariableProximity
+              label="I turn real-world data into AI systems people actually use."
+              className="variable-proximity-demo"
+              fromFontVariationSettings="'wght' 400, 'opsz' 9"
+              toFontVariationSettings="'wght' 1000, 'opsz' 40"
+              containerRef={sectionRef}
+              radius={120}
+              falloff="linear"
+            />
+          </motion.div>
 
           {/* Typing animation for focus areas */}
           <TypingTagline />

@@ -15,13 +15,13 @@ import { useViewMode } from "@/contexts/ViewModeContext";
 
 const sectionVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     transition: { duration: 0.5, ease: "easeOut" as const }
   },
-  exit: { 
-    opacity: 0, 
+  exit: {
+    opacity: 0,
     y: -20,
     transition: { duration: 0.3, ease: "easeIn" as const }
   }
@@ -34,14 +34,14 @@ const Index = () => {
     <>
       <Helmet>
         <title>Nithilan M | AI & Data Science Engineer</title>
-        <meta 
-          name="description" 
-          content="Portfolio of Nithilan M - AI & Data Science Engineer specializing in LLMs, RAG Systems, Machine Learning, and Data Analytics. Building practical AI systems with real-world impact." 
+        <meta
+          name="description"
+          content="Portfolio of Nithilan M - AI & Data Science Engineer specializing in LLMs, RAG Systems, Machine Learning, and Data Analytics. Building practical AI systems with real-world impact."
         />
         <meta name="keywords" content="AI Engineer, Data Scientist, Machine Learning, LLMs, RAG Systems, Python, Deep Learning" />
         <link rel="canonical" href="https://nithilan.dev" />
       </Helmet>
-      
+
       <div className="min-h-screen bg-background">
         <Navbar />
         <main>
@@ -58,7 +58,7 @@ const Index = () => {
               </motion.div>
             )}
           </AnimatePresence>
-          
+
           <AnimatePresence mode="wait">
             {!isRecruiterMode && (
               <motion.div
@@ -72,12 +72,12 @@ const Index = () => {
               </motion.div>
             )}
           </AnimatePresence>
-          
+
           <SkillsSection />
           <ExperienceSection />
           <ResearchSection />
           <ProjectsSection />
-          
+
           <AnimatePresence mode="wait">
             {!isRecruiterMode && (
               <motion.div
@@ -91,7 +91,7 @@ const Index = () => {
               </motion.div>
             )}
           </AnimatePresence>
-          
+
           <AnimatePresence mode="wait">
             <motion.div
               key={isRecruiterMode ? "contact-minimal" : "contact-full"}

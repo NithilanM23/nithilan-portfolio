@@ -36,11 +36,11 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
-      
+
       // Determine active section
       const sections = navLinks.map(link => link.href.substring(1));
       const scrollPosition = window.scrollY + 120;
-      
+
       for (const section of [...sections].reverse()) {
         const element = document.getElementById(section);
         if (element && element.offsetTop <= scrollPosition) {
@@ -48,7 +48,7 @@ const Navbar = () => {
           break;
         }
       }
-      
+
       // Reset if at top
       if (window.scrollY < 100) {
         setActiveSection("");
@@ -72,11 +72,10 @@ const Navbar = () => {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled 
-          ? "py-3 bg-background/60 backdrop-blur-xl border-b border-border/40 shadow-soft" 
-          : "py-5 bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
+        ? "py-3 bg-background/60 backdrop-blur-xl border-b border-border/40 shadow-soft"
+        : "py-5 bg-transparent"
+        }`}
     >
       <nav className="section-container">
         <div className="flex items-center justify-between">
@@ -92,10 +91,10 @@ const Navbar = () => {
             whileTap={{ scale: 0.98 }}
           >
             <div className="flex items-center gap-2">
-              <svg 
-                viewBox="0 0 140 100" 
-                className="w-7 md:w-8 h-auto text-primary drop-shadow-[0_0_4px_rgba(var(--primary),0.3)] transition-transform duration-300 group-hover:scale-105" 
-                fill="currentColor" 
+              <svg
+                viewBox="0 0 140 100"
+                className="w-7 md:w-8 h-auto text-primary drop-shadow-[0_0_4px_rgba(var(--primary),0.3)] transition-transform duration-300 group-hover:scale-105"
+                fill="currentColor"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <rect x="0" y="0" width="22" height="100" />
@@ -124,11 +123,10 @@ const Navbar = () => {
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.08 + 0.3 }}
-                  className={`relative px-4 py-2 text-sm font-medium tracking-premium transition-all duration-300 ${
-                    activeSection === link.href.substring(1)
-                      ? "text-primary"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
+                  className={`relative px-4 py-2 text-sm font-medium tracking-premium transition-all duration-300 ${activeSection === link.href.substring(1)
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                    }`}
                 >
                   {link.name}
                   {/* Active indicator */}
@@ -202,11 +200,10 @@ const Navbar = () => {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05 }}
-                    className={`flex items-center justify-between py-3 px-4 rounded-lg text-sm font-medium tracking-premium transition-all duration-300 ${
-                      activeSection === link.href.substring(1)
-                        ? "text-primary bg-primary/10"
-                        : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
-                    }`}
+                    className={`flex items-center justify-between py-3 px-4 rounded-lg text-sm font-medium tracking-premium transition-all duration-300 ${activeSection === link.href.substring(1)
+                      ? "text-primary bg-primary/10"
+                      : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                      }`}
                   >
                     {link.name}
                     <ChevronRight className="w-4 h-4 opacity-50" />
