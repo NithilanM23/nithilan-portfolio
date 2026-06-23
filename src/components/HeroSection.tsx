@@ -5,6 +5,7 @@ import { useRef, useEffect, useState } from "react";
 import CursorTrail from "./CursorTrail";
 
 import VariableProximity from "./VariableProximity";
+import Lightfall from "./Lightfall";
 
 
 // Animated counter hook
@@ -86,7 +87,7 @@ const RoleBadge = () => {
       transition={{ duration: 0.5, delay: 0.3 }}
     >
       <span
-        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium tracking-premium cursor-default transition-all duration-300 hover:bg-primary/15 hover:border-primary/30"
+        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-background/60 backdrop-blur-md border border-primary/30 text-primary shadow-[0_4px_20px_rgba(0,0,0,0.5)] text-sm font-medium tracking-premium cursor-default transition-all duration-300 hover:bg-background/80 hover:border-primary/50"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -200,42 +201,36 @@ const HeroSection = () => {
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/10" />
 
-      {/* Animated background orbs */}
-      <motion.div
-        className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/15 rounded-full blur-[120px]"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.2, 0.4, 0.2]
-        }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[100px]"
-        animate={{
-          scale: [1.2, 1, 1.2],
-          opacity: [0.15, 0.3, 0.15]
-        }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-      />
+      {/* Lightfall 3D Background */}
+      <div className="absolute inset-0 z-0 pointer-events-auto">
+        <Lightfall
+          colors={['#cd6a00ff', '#a95700ff', '#cd6a00ff']} // Pure white, vibrant orange, and deep rose/red
+          backgroundColor="#cd6a00ff" // Restored to a clean orange glow
+          speed={0.3}
+          streakCount={1}
+          density={0.5}
+          backgroundGlow={0.8}
+          glow={1.3}
+          streakWidth={1}
+          twinkle={1.5}
+          zoom={2}
+          mouseInteraction={true}
+          mouseStrength={0.5}
+          mouseRadius={3}
+          mouseDampening={0.15}
+          mixBlendMode="screen"
+        />
+      </div>
+
+      {/* Transition Gradient overlay at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-background to-transparent z-0 pointer-events-none" />
 
       {/* Subtle grid pattern */}
-      <div className="absolute inset-0 opacity-[0.02]" style={{
+      <div className="absolute inset-0 opacity-[0.02] z-0 pointer-events-none" style={{
         backgroundImage: `linear-gradient(hsl(var(--foreground)) 1px, transparent 1px),
                           linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)`,
         backgroundSize: '60px 60px'
       }} />
-
-      {/* Abstract decorative shapes */}
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-        className="absolute top-32 right-24 w-32 h-32 border border-primary/10 rounded-full opacity-30 hidden lg:block"
-      />
-      <motion.div
-        animate={{ rotate: -360 }}
-        transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
-        className="absolute bottom-40 left-24 w-20 h-20 border border-primary/10 rounded-lg opacity-20 hidden lg:block"
-      />
 
       <CursorTrail />
 
@@ -265,7 +260,7 @@ const HeroSection = () => {
               animate={{ scaleX: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             />
-            <span className="text-lg text-muted-foreground italic tracking-wide">I'm Nithilan</span>
+            <span className="text-lg text-foreground font-semibold italic tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">I'm Nithilan</span>
             <motion.div
               className="w-12 h-0.5 bg-gradient-to-l from-transparent to-primary"
               initial={{ scaleX: 0 }}
@@ -275,7 +270,7 @@ const HeroSection = () => {
           </motion.div>
 
           {/* Main headline */}
-          <div className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-foreground mb-6 leading-none tracking-tight flex flex-col items-center justify-center variable-proximity">
+          <div className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-foreground mb-6 leading-none tracking-tight flex flex-col items-center justify-center variable-proximity drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
             <VariableProximity
               label="AI & DATA"
               className="inline-block cursor-default"

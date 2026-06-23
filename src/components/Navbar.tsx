@@ -4,6 +4,7 @@ import { Menu, X, Download, ChevronRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import ViewModeToggle from "./ViewModeToggle";
+import GlassSurface from "./GlassSurface";
 import { useViewMode } from "@/contexts/ViewModeContext";
 
 const fullNavLinks = [
@@ -72,14 +73,11 @@ const Navbar = () => {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-        ? "py-3 bg-background/60 backdrop-blur-xl border-b border-border/40 shadow-soft"
-        : "py-5 bg-transparent"
-        }`}
+      className="fixed top-4 sm:top-6 left-0 right-0 z-50 py-2"
     >
       <nav className="section-container">
         <div className="flex items-center justify-between">
-          {/* Logo */}
+          {/* Logo — floats left, no glass */}
           <motion.a
             href="#home"
             onClick={(e) => {
@@ -93,7 +91,7 @@ const Navbar = () => {
             <div className="flex items-center gap-2">
               <svg
                 viewBox="0 0 140 100"
-                className="w-7 md:w-8 h-auto text-primary drop-shadow-[0_0_4px_rgba(var(--primary),0.3)] transition-transform duration-300 group-hover:scale-105"
+                className="w-7 md:w-8 h-auto text-primary drop-shadow-[0_0_8px_rgba(var(--primary),0.8)] transition-transform duration-300 group-hover:scale-105"
                 fill="currentColor"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -103,46 +101,73 @@ const Navbar = () => {
                 <polygon points="0,0 22,0 81,100 59,100" />
                 <polygon points="59,0 81,0 99.5,34.25 118,0 140,0 99.5,75" />
               </svg>
-              <span className="text-lg font-bold tracking-[0.15em] text-foreground uppercase group-hover:text-primary transition-colors duration-300" style={{ fontFamily: "'Inter', sans-serif" }}>
-                Nithilan <span className="text-primary group-hover:text-primary-glow">M</span>
+              <span className="text-xl font-extrabold tracking-[0.15em] text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] uppercase group-hover:text-primary transition-colors duration-300 hidden xl:inline" style={{ fontFamily: "'Inter', sans-serif" }}>
+                Nithilan <span className="text-primary drop-shadow-[0_0_8px_rgba(255,104,0,0.8)] group-hover:text-primary-glow">M</span>
               </span>
             </div>
           </motion.a>
 
-          {/* Desktop Navigation - Centered */}
+          {/* Desktop Navigation — Centered Glass Pill */}
           <div className="hidden lg:flex items-center justify-center flex-1">
-            <div className="flex items-center gap-1">
-              {navLinks.map((link, index) => (
-                <motion.a
-                  key={link.name}
-                  href={link.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection(link.href);
-                  }}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.08 + 0.3 }}
-                  className={`relative px-4 py-2 text-sm font-medium tracking-premium transition-all duration-300 ${activeSection === link.href.substring(1)
-                    ? "text-primary"
-                    : "text-muted-foreground hover:text-foreground"
-                    }`}
-                >
-                  {link.name}
-                  {/* Active indicator */}
-                  <motion.span
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-primary rounded-full"
-                    initial={{ width: 0 }}
-                    animate={{ width: activeSection === link.href.substring(1) ? '50%' : 0 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                  />
-                </motion.a>
-              ))}
-            </div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: -10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <GlassSurface
+                width="auto"
+                height={52}
+                borderRadius={26}
+                borderWidth={0.05}
+                brightness={40}
+                opacity={0.9}
+                blur={14}
+                displace={0}
+                backgroundOpacity={0.15}
+                saturation={1.2}
+                distortionScale={-120}
+                redOffset={0}
+                greenOffset={8}
+                blueOffset={16}
+                className="nav-glass-pill shadow-lg shadow-black/5"
+              >
+                <div className="flex items-center gap-1 md:gap-2 px-4">
+                  {navLinks.map((link, index) => (
+                    <motion.a
+                      key={link.name}
+                      href={link.href}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection(link.href);
+                      }}
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.06 + 0.4 }}
+                      className={`relative px-4 py-2 text-base font-semibold tracking-premium transition-all duration-300 rounded-full whitespace-nowrap ${activeSection === link.href.substring(1)
+                        ? "text-primary drop-shadow-[0_0_8px_rgba(255,104,0,0.6)]"
+                        : "text-foreground/90 hover:text-white hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.5)]"
+                        }`}
+                    >
+                      {link.name}
+                      {/* Active indicator dot */}
+                      <motion.span
+                        className="absolute bottom-0.5 left-1/2 -translate-x-1/2 h-[3px] bg-primary rounded-full"
+                        initial={{ width: 0, opacity: 0 }}
+                        animate={{
+                          width: activeSection === link.href.substring(1) ? '40%' : 0,
+                          opacity: activeSection === link.href.substring(1) ? 1 : 0,
+                        }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                      />
+                    </motion.a>
+                  ))}
+                </div>
+              </GlassSurface>
+            </motion.div>
           </div>
 
-          {/* View Mode Toggle & Resume Button - Right (Stacked) */}
-          <div className="hidden lg:flex flex-col items-end gap-1 flex-shrink-0">
+          {/* Right controls — float right, no glass */}
+          <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
             <ViewModeToggle />
             <Tooltip>
               <TooltipTrigger asChild>
@@ -152,14 +177,12 @@ const Navbar = () => {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.6, type: "tween", duration: 0.2 }}
-                  className="group flex items-center gap-2 h-7 px-3 rounded-full bg-primary/10 border border-primary/20 hover:bg-primary hover:border-primary transition-all duration-200"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  className="group flex items-center justify-center w-8 h-8 rounded-full bg-secondary/80 backdrop-blur-sm border border-border hover:bg-primary/10 hover:border-primary/20 transition-all duration-300"
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.97 }}
+                  aria-label="Download Resume"
                 >
-                  <Download className="w-3 h-3 text-primary group-hover:text-primary-foreground transition-colors duration-200" />
-                  <span className="text-xs font-medium text-primary group-hover:text-primary-foreground transition-colors duration-200 whitespace-nowrap">
-                    Resume
-                  </span>
+                  <Download className="w-4 h-4 text-primary group-hover:text-primary transition-colors" />
                 </motion.a>
               </TooltipTrigger>
               <TooltipContent side="bottom" className="text-xs">
