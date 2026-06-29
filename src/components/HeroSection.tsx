@@ -149,6 +149,14 @@ const TypingTagline = () => {
 const HeroSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [splitTextDone, setSplitTextDone] = useState(false);
+  const [mountBackground, setMountBackground] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMountBackground(true);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"]
@@ -203,23 +211,34 @@ const HeroSection = () => {
 
       {/* Lightfall 3D Background */}
       <div className="absolute inset-0 z-0 pointer-events-auto">
-        <Lightfall
-          colors={['#cd6a00ff', '#a95700ff', '#cd6a00ff']} // Pure white, vibrant orange, and deep rose/red
-          backgroundColor="#cd6a00ff" // Restored to a clean orange glow
-          speed={0.3}
-          streakCount={1}
-          density={0.5}
-          backgroundGlow={0.8}
-          glow={1.3}
-          streakWidth={1}
-          twinkle={1.5}
-          zoom={2}
-          mouseInteraction={true}
-          mouseStrength={0.5}
-          mouseRadius={3}
-          mouseDampening={0.15}
-          mixBlendMode="screen"
-        />
+        <AnimatePresence>
+          {mountBackground && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 2, ease: "easeInOut" }}
+              className="absolute inset-0 w-full h-full"
+            >
+              <Lightfall
+                colors={['#cd6a00ff', '#a95700ff', '#cd6a00ff']} // Pure white, vibrant orange, and deep rose/red
+                backgroundColor="#cd6a00ff" // Restored to a clean orange glow
+                speed={0.3}
+                streakCount={1}
+                density={0.5}
+                backgroundGlow={0.8}
+                glow={1.3}
+                streakWidth={1}
+                twinkle={1.5}
+                zoom={2}
+                mouseInteraction={true}
+                mouseStrength={0.5}
+                mouseRadius={3}
+                mouseDampening={0.15}
+                mixBlendMode="screen"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Transition Gradient overlay at bottom */}
