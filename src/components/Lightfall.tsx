@@ -304,8 +304,17 @@ const Lightfall: React.FC<LightfallProps> = ({
       canvas.addEventListener('pointermove', onPointerMove);
     }
 
+    let isVisible = true;
+    const io = new IntersectionObserver((entries) => {
+      isVisible = entries[0].isIntersecting;
+    });
+    io.observe(container);
+
     const loop = (t: number) => {
       rafRef.current = requestAnimationFrame(loop);
+      
+      if (!isVisible) return; // Skip all calculations and rendering if off-screen
+
       uniforms.iTime.value = t * 0.001;
       if (mouseDampening > 0) {
         if (!lastTimeRef.current) lastTimeRef.current = t;
@@ -335,6 +344,7 @@ const Lightfall: React.FC<LightfallProps> = ({
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       if (mouseInteraction) canvas.removeEventListener('pointermove', onPointerMove);
       ro.disconnect();
+      io.disconnect();
       if (canvas.parentElement === container) {
         container.removeChild(canvas);
       }

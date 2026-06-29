@@ -46,28 +46,36 @@ const Navbar = () => {
   const navLinks = isRecruiterMode ? recruiterNavLinks : fullNavLinks;
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 50);
 
-      // Determine active section
-      const sections = navLinks.map(link => link.href.substring(1));
-      const scrollPosition = window.scrollY + 120;
+          // Determine active section
+          const sections = navLinks.map(link => link.href.substring(1));
+          const scrollPosition = window.scrollY + 120;
 
-      for (const section of [...sections].reverse()) {
-        const element = document.getElementById(section);
-        if (element && element.offsetTop <= scrollPosition) {
-          setActiveSection(section);
-          break;
-        }
-      }
+          for (const section of [...sections].reverse()) {
+            const element = document.getElementById(section);
+            if (element && element.offsetTop <= scrollPosition) {
+              setActiveSection(section);
+              break;
+            }
+          }
 
-      // Reset if at top
-      if (window.scrollY < 100) {
-        setActiveSection("");
+          // Reset if at top
+          if (window.scrollY < 100) {
+            setActiveSection("");
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [navLinks]);
 
