@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { Brain, Code, Database, BarChart3, Layers,Server,Workflow } from "lucide-react";
+import { Brain, Code, Database, BarChart3, Layers, Server, Workflow } from "lucide-react";
+import LogoLoop, { LogoItem } from "./LogoLoop";
 
 const skillCategories = [
   {
@@ -100,6 +101,29 @@ const skillCategories = [
   },
 ];
 
+const techLogos: LogoItem[] = [
+  { src: "https://cdn.simpleicons.org/python", alt: "Python" },
+  { src: "https://cdn.simpleicons.org/pytorch", alt: "PyTorch" },
+  { src: "https://cdn.simpleicons.org/ollama/white", alt: "Ollama" },
+  { src: "https://raw.githubusercontent.com/FlowiseAI/Flowise/main/images/flowise.png", alt: "Flowise" },
+  { src: "https://cdn.simpleicons.org/n8n", alt: "n8n" },
+  { src: "https://cdn.simpleicons.org/django/092E20/white", alt: "Django" },
+  { src: "https://cdn.simpleicons.org/fastapi", alt: "FastAPI" },
+  { src: "https://cdn.simpleicons.org/nextdotjs/white", alt: "Next.js" },
+  { src: "https://cdn.simpleicons.org/tensorflow", alt: "TensorFlow" },
+  { src: "https://cdn.simpleicons.org/huggingface", alt: "Hugging Face" },
+  { src: "https://cdn.simpleicons.org/scikitlearn", alt: "Scikit-Learn" },
+  { src: "https://cdn.simpleicons.org/pandas/white", alt: "Pandas" },
+  { src: "https://cdn.simpleicons.org/langchain/white", alt: "LangChain" },
+  { src: "https://cdn.simpleicons.org/docker", alt: "Docker" },
+  { src: "https://cdn.simpleicons.org/github/white", alt: "GitHub" },
+  { src: "https://cdn.simpleicons.org/postgresql", alt: "PostgreSQL" },
+  { src: "https://cdn.simpleicons.org/redis", alt: "Redis" },
+  { src: "https://cdn.simpleicons.org/typescript", alt: "TypeScript" },
+  { src: "https://github.com/pinecone-io.png", alt: "Pinecone" },
+  { src: "https://github.com/facebookresearch.png", alt: "FAISS" },
+  { src: "https://cdn.simpleicons.org/postman", alt: "API" }
+];
 
 const SkillsSection = () => {
   return (
@@ -117,6 +141,18 @@ const SkillsSection = () => {
           </h2>
           <div className="w-20 h-1 bg-primary mx-auto" />
         </motion.div>
+
+        {/* Logo Loop Marquee */}
+        <div className="mb-20 w-full overflow-hidden">
+          <LogoLoop 
+            logos={techLogos} 
+            speed={70} 
+            pauseOnHover={true} 
+            fadeOut={true} 
+            logoHeight={40} 
+            gap={120}
+          />
+        </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {skillCategories.map((category, index) => (
