@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Download, ChevronRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import ViewModeToggle from "./ViewModeToggle";
 import GlassSurface from "./GlassSurface";
+import MagneticElement from "./MagneticElement";
 import { useViewMode } from "@/contexts/ViewModeContext";
 
 const fullNavLinks = [
@@ -31,6 +32,16 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const { isRecruiterMode } = useViewMode();
+
+  const navRef = useRef<HTMLDivElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!navRef.current) return;
+    const rect = navRef.current.getBoundingClientRect();
+    setMousePosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
 
   const navLinks = isRecruiterMode ? recruiterNavLinks : fullNavLinks;
 
@@ -73,7 +84,7 @@ const Navbar = () => {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed top-4 sm:top-6 left-0 right-0 z-50 py-2"
+      className={`fixed left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'top-2 sm:top-4 py-2' : 'top-4 sm:top-6 py-4'}`}
     >
       <nav className="section-container">
         <div className="flex items-center justify-between">
@@ -114,55 +125,74 @@ const Navbar = () => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             >
-              <GlassSurface
-                width="auto"
-                height={52}
-                borderRadius={26}
-                borderWidth={0.05}
-                brightness={40}
-                opacity={0.9}
-                blur={14}
-                displace={0}
-                backgroundOpacity={0.15}
-                saturation={1.2}
-                distortionScale={-120}
-                redOffset={0}
-                greenOffset={8}
-                blueOffset={16}
-                className="nav-glass-pill shadow-lg shadow-black/5"
+              {/* Outer wrapper to apply glow without CSS conflicts */}
+              <div 
+                ref={navRef}
+                onMouseMove={handleMouseMove}
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
+                className="relative rounded-full shadow-lg shadow-black/5 dark:shadow-[0_0_30px_rgba(255,255,255,0.15),0_0_10px_rgba(255,255,255,0.05)_inset] dark:bg-white/[0.04] ring-1 ring-black/5 dark:ring-white/10 transition-shadow duration-300 overflow-hidden group"
               >
-                <div className="flex items-center gap-1 md:gap-2 px-4">
-                  {navLinks.map((link, index) => (
-                    <motion.a
-                      key={link.name}
-                      href={link.href}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        scrollToSection(link.href);
-                      }}
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.06 + 0.4 }}
-                      className={`relative px-4 py-2 text-base font-semibold tracking-premium transition-all duration-300 rounded-full whitespace-nowrap ${activeSection === link.href.substring(1)
-                        ? "text-primary drop-shadow-[0_0_8px_rgba(255,104,0,0.6)]"
-                        : "text-foreground/90 hover:text-white hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.5)]"
-                        }`}
-                    >
-                      {link.name}
-                      {/* Active indicator dot */}
-                      <motion.span
-                        className="absolute bottom-0.5 left-1/2 -translate-x-1/2 h-[3px] bg-primary rounded-full"
-                        initial={{ width: 0, opacity: 0 }}
-                        animate={{
-                          width: activeSection === link.href.substring(1) ? '40%' : 0,
-                          opacity: activeSection === link.href.substring(1) ? 1 : 0,
-                        }}
-                        transition={{ duration: 0.3, ease: "easeOut" }}
-                      />
-                    </motion.a>
-                  ))}
-                </div>
-              </GlassSurface>
+                {/* Spotlight effect */}
+                <motion.div
+                  className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+                  animate={{
+                    background: `radial-gradient(100px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 255, 255, 0.1), transparent 100%)`,
+                  }}
+                />
+
+                <GlassSurface
+                  width="auto"
+                  height={52}
+                  borderRadius={26}
+                  borderWidth={0.05}
+                  brightness={40}
+                  opacity={0.9}
+                  blur={14}
+                  displace={0}
+                  backgroundOpacity={0.15}
+                  saturation={1.2}
+                  distortionScale={-120}
+                  redOffset={0}
+                  greenOffset={8}
+                  blueOffset={16}
+                  className="nav-glass-pill"
+                >
+                  <div className="flex items-center gap-1 md:gap-2 px-4 relative z-20">
+                    {navLinks.map((link, index) => {
+                      const isActive = activeSection === link.href.substring(1);
+                      return (
+                        <MagneticElement key={link.name} intensity={0.1}>
+                          <motion.a
+                            href={link.href}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              scrollToSection(link.href);
+                            }}
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.06 + 0.4 }}
+                            className={`relative px-4 py-2 text-base font-semibold tracking-premium transition-colors duration-300 rounded-full whitespace-nowrap block ${isActive
+                              ? "text-primary drop-shadow-[0_0_8px_rgba(255,104,0,0.6)]"
+                              : "text-foreground/80 hover:text-foreground"
+                              }`}
+                          >
+                            {/* Sliding frosted pill indicator */}
+                            {isActive && (
+                              <motion.span
+                                layoutId="activeNavPill"
+                                className="absolute inset-0 bg-primary/10 rounded-full -z-10 ring-1 ring-primary/20 backdrop-blur-md dark:shadow-[0_0_15px_rgba(255,104,0,0.2)]"
+                                transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                              />
+                            )}
+                            <span className="relative z-10">{link.name}</span>
+                          </motion.a>
+                        </MagneticElement>
+                      );
+                    })}
+                  </div>
+                </GlassSurface>
+              </div>
             </motion.div>
           </div>
 
@@ -177,12 +207,13 @@ const Navbar = () => {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.6, type: "tween", duration: 0.2 }}
-                  className="group flex items-center justify-center w-8 h-8 rounded-full bg-secondary/80 backdrop-blur-sm border border-border hover:bg-primary/10 hover:border-primary/20 transition-all duration-300"
+                  className="group relative overflow-hidden flex items-center justify-center w-8 h-8 rounded-full bg-secondary/80 backdrop-blur-sm border border-border hover:bg-primary/10 hover:border-primary/20 transition-all duration-300"
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.97 }}
                   aria-label="Download Resume"
                 >
-                  <Download className="w-4 h-4 text-primary group-hover:text-primary transition-colors" />
+                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-[150%] animate-shimmer pointer-events-none" />
+                  <Download className="w-4 h-4 text-primary group-hover:text-primary transition-colors relative z-10" />
                 </motion.a>
               </TooltipTrigger>
               <TooltipContent side="bottom" className="text-xs">

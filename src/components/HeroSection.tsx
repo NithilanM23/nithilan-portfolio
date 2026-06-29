@@ -202,7 +202,7 @@ const HeroSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} id="home" className="min-h-screen flex items-center relative overflow-hidden pt-20">
+    <section ref={sectionRef} id="home" className="min-h-screen flex flex-col justify-center relative overflow-hidden pt-32 pb-16">
       {/* Cursor Trail Effect */}
       {/* <CursorTrail /> */}
 
