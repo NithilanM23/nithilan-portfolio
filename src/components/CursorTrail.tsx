@@ -47,6 +47,9 @@ const CursorTrail = () => {
   const mouseRef = useRef({ x: 0, y: 0, moved: false });
 
   useEffect(() => {
+    // Disable on touch devices since they don't have a cursor
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -58,10 +61,13 @@ const CursorTrail = () => {
     canvas.height = height;
 
     const handleResize = () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
+      // Only resize if width changes significantly to avoid thrashing on mobile scroll (address bar hide/show)
+      if (Math.abs(window.innerWidth - width) > 10) {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+      }
     };
 
     const handleMouseMove = (e: MouseEvent) => {

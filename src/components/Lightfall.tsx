@@ -280,8 +280,13 @@ const Lightfall: React.FC<LightfallProps> = ({
     const mesh = new Mesh(gl, { geometry, program });
     meshRef.current = mesh;
 
+    let lastWidth = 0;
     const resize = () => {
       const rect = container.getBoundingClientRect();
+      // Only resize if width changes or on initial load to avoid mobile scroll crash
+      if (lastWidth > 0 && Math.abs(rect.width - lastWidth) < 10) return;
+      lastWidth = rect.width;
+      
       renderer.setSize(rect.width, rect.height);
       uniforms.iResolution.value = [gl.drawingBufferWidth, gl.drawingBufferHeight, 1];
     };
