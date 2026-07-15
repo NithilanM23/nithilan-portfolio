@@ -15,7 +15,9 @@ const skillCategories = [
       "LSTM",
       "GRU",
       "Regression & Classification",
-      "Model Evaluation"
+      "Model Evaluation",
+      "HuggingFace Transformers",
+      "scikit-learn"
     ],
     color: "from-orange-500 to-amber-500",
   },
@@ -29,7 +31,8 @@ const skillCategories = [
       "BERT",
       "SpaCy",
       "Embeddings",
-      "Vector Search"
+      "Vector Search",
+      "Ollama"
     ],
     color: "from-amber-500 to-yellow-500",
   },
@@ -43,7 +46,10 @@ const skillCategories = [
       "TensorFlow / Keras",
       "Flask",
       "Django REST Framework",
-      "Streamlit"
+      "FastAPI",
+      "Streamlit",
+      "HTML",
+      "CSS"
     ],
     color: "from-orange-600 to-orange-400",
   },
@@ -57,7 +63,11 @@ const skillCategories = [
       "Data Cleaning",
       "Exploratory Data Analysis (EDA)",
       "Data Visualization",
-      "Insight Generation"
+      "Insight Generation",
+      "Pandas",
+      "NumPy",
+      "Matplotlib",
+      "Seaborn"
     ],
     color: "from-amber-600 to-orange-500",
   },
@@ -70,6 +80,8 @@ const skillCategories = [
       "ChromaDB",
       "MongoDB",
       "SQLite",
+      "PostgreSQL",
+      "PGvector",
       "Vector Databases",
       "Embedding Indexing"
     ],
@@ -83,7 +95,11 @@ const skillCategories = [
       "Model Deployment",
       "API Integration",
       "Authentication (Token / Session)",
-      "Railway / Render Deployment"
+      "Docker",
+      "CI/CD",
+      "Railway / Render Deployment",
+      "Inno Setup",
+      "Windows Installer Packaging"
     ],
     color: "from-red-500 to-orange-500",
   },
@@ -93,7 +109,7 @@ const skillCategories = [
     skills: [
       "Flowise",
       "N8N",
-      "Langchain",
+      "LangChain",
       "Git & GitHub",
       "No-Code AI Pipelines"
     ],

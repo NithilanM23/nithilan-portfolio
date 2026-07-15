@@ -23,13 +23,6 @@ const channels = [
     href: 'https://www.linkedin.com/in/nithilanm23/',
     cmd: 'open --channel linkedin',
   },
-  {
-    id: 'TWITTER',
-    label: 'Broadcast Channel',
-    value: '@nithilanm_',
-    href: 'https://twitter.com/nithilanm_',
-    cmd: 'open --channel twitter',
-  },
 ]
 
 const terminalLines = [
@@ -239,6 +232,26 @@ export default function ContactSection() {
                   <ChannelLink ch={ch} index={i} />
                 </div>
               ))}
+              
+              {/* Happy to connect animated block */}
+              <div className="bg-void p-5 md:p-6 flex flex-col justify-center items-center h-full min-h-[140px] border border-transparent">
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  className="relative group flex items-center justify-center w-full h-full"
+                >
+                  <div className="absolute -inset-4 bg-gradient-to-r from-signal/0 via-signal/10 to-signal/0 rounded-lg blur-md opacity-50 group-hover:opacity-100 transition-opacity duration-700 animate-pulse" />
+                  <span className="font-mono text-xs md:text-sm tracking-[0.2em] text-signal flex items-center gap-3">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-signal opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-signal"></span>
+                    </span>
+                    HAPPY TO CONNECT
+                  </span>
+                </motion.div>
+              </div>
             </div>
 
             {/* Availability banner */}

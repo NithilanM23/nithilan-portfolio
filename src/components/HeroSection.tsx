@@ -173,7 +173,7 @@ const HeroSection = () => {
     }
   };
 
-  const cgpa = useCounter(9.0, 2000, 1);
+  const cgpa = useCounter(9.04, 2000, 2);
   const llmRank = useCounter(5, 1500);
   const aiRank = useCounter(16, 1800);
 

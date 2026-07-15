@@ -3,28 +3,38 @@ import { Briefcase, Calendar, MapPin } from "lucide-react";
 
 const experiences = [
   {
+    role: "AI Engineer Trainee",
+    company: "Daimler India Commercial Vehicles (DICV)",
+    location: "Chennai, India",
+    date: "May 2026 – July 2026",
+    bullets: [
+      "Enterprise Local AI Platform: Architected and deployed an enterprise on-premise GenAI platform (Next.js, FastAPI) powered by GGUF-quantized local LLMs, packaged as a zero-touch Windows installer enabling one-click deployment across 50+ enterprise systems.",
+      "Agentic Query & Data Pipeline: Built a 3-agent pipeline (query routing, tool invocation, response generation) for RAG and real-time web-augmented search, plus a natural-language-to-code module for querying Excel datasets in plain English."
+    ],
+    tech: ["Next.js", "FastAPI", "GGUF", "Local LLMs", "Windows Installer", "Agentic RAG"]
+  },
+  {
     role: "AI/ML Intern (Remote)",
     company: "Sopra Steria India",
-    location: "Chennai, India",
+    location: "Remote",
     date: "Dec 2025 – March 2026",
     bullets: [
-      "Multimodal RAG Development: Architected a fully air-gapped multimodal RAG system in Python that ingested 500+ enterprise PDFs — parsing tables, images, and text — achieving sub-2s retrieval latency with zero external API calls, eliminating data privacy risk for a regulated financial client.",
-      "Hybrid Retrieval Architecture: Engineered a hybrid BM25 + dense-vector retrieval pipeline using FAISS, improving top-5 retrieval precision by 18% over baseline keyword search on an internal evaluation set of 200 enterprise queries.",
-      "Private LLM Integration: Deployed and optimized a locally-hosted LLaMA-3.2 model using Ollama, reducing inference latency by 35% through 4-bit quantization (GGUF), enabling full document Q&A without cloud dependency."
+      "Multimodal RAG Development: Built a multimodal RAG system for 500+ enterprise PDFs (text, tables, images), implementing heading-aware chunking and metadata filtering to achieve <2s retrieval with zero external API calls.",
+      "Hybrid Retrieval Architecture: Engineered a hybrid retrieval pipeline combining BM25 and FAISS with RRF, MMR diversification, and cross-encoder reranking, improving Top-5 retrieval precision by 18% on 200 enterprise queries.",
+      "Local LLM Deployment: Deployed a GGUF-quantized LLaMA-3.2 model using Ollama, reducing inference latency by 35% while enabling secure, offline enterprise document Q&A."
     ],
     tech: ["Python", "RAG", "FAISS", "LLaMA-3.2", "Ollama", "BM25"]
   },
   {
-    role: "Data Analyst Intern",
+    role: "Data Science Intern",
     company: "8Queens Software Technologies Pvt. Ltd.",
     location: "Chennai, India",
-    date: "June 2025 - July 2025",
+    date: "June 2025 – July 2025",
     bullets: [
-      "Built and evaluated customer churn prediction models using Python, Pandas, and statistical analysis, identifying high-risk customer segments and key churn drivers.",
-      "Contributed to building an internal knowledge assistant using cheerio, Flowise, and Pinecone, reducing employee information retrieval time by 40%.",
-      "Collaborated in designing and deploying interactive business intelligence dashboards using Power BI and Power Query, transforming complex datasets into clear, decision-ready visualizations."
+      "Churn Modeling: Built customer churn prediction models using Python and Pandas to identify high-risk customer segments.",
+      "Visualization Tools: Built an automated EDA pipeline using YData Profiling and Pandas to generate statistical reports."
     ],
-    tech: ["Power BI", "Power Query", "Cheerio", "Flowise", "Pinecone", "Data Analysis", "Dashboard Design"]
+    tech: ["Python", "Pandas", "Machine Learning", "YData Profiling", "EDA"]
   }
 ];
 

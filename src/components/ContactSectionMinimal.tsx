@@ -83,7 +83,12 @@ const ContactSectionMinimal = () => {
           viewport={{ once: true }}
           className="mt-8 flex justify-center"
         >
-          <Button variant="hero" size="lg" className="group">
+          <Button 
+            variant="hero" 
+            size="lg" 
+            className="group"
+            onClick={() => window.open('https://drive.google.com/file/d/1zXFpiOLWb9D-thHGlO7pnbIcyuE0jK2p/view?usp=sharing', '_blank')}
+          >
             <FileText className="w-4 h-4" />
             Download Resume
           </Button>

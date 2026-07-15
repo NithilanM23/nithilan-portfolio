@@ -30,20 +30,20 @@ const ResearchSection = () => {
             
             <div className="flex flex-col">
               <h3 className="text-2xl font-bold text-foreground mb-1">RGAE-PNNR: Unsupervised Visual Anomaly Detection</h3>
-              <p className="text-primary font-medium mb-2">Revised Draft submitted at Springer Nature</p>
+              <p className="text-primary font-medium mb-2">Springer Nature (Under Review)</p>
               <p className="text-muted-foreground text-sm mb-6">Aug 2025 &ndash; Jan 2026</p>
               
               <p className="text-muted-foreground text-base mb-6">
-                Co-developed a lightweight hybrid anomaly detection framework combining Residual Gated AutoEncoder (RGAE) and Patchwise Nearest Neighbor Reconstruction (PNNR).
+                Co-designed a hybrid deep learning model combining residual gated autoencoders with patch-level nearest-neighbor reconstruction for fine-grained industrial defect localization.
               </p>
               
               <div className="mb-8">
                 <h4 className="font-bold text-foreground mb-4">Key Contributions:</h4>
                 <ul className="space-y-3">
                   {[
-                    "Implemented the complete end-to-end pipeline in PyTorch",
-                    "Engineered a custom gating mechanism to reduce reconstruction over-smoothing",
-                    "Worked on defect localization and semantic consistency optimization",
+                    "Architecture Design: Co-designed a hybrid deep learning model combining residual gated autoencoders with patch-level nearest-neighbor reconstruction.",
+                    "Technical Contribution: Implemented the complete end-to-end pipeline in PyTorch and engineered a custom gating mechanism to mitigate reconstruction over-smoothing.",
+                    "Performance Optimization: Achieved State-of-the-Art (SOTA) results on MVTec AD (99.6% AUROC) and VisA benchmarks, optimizing the model to just 5.9M parameters.",
                   ].map((item, index) => (
                     <li key={index} className="flex items-start gap-3 text-muted-foreground">
                       <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2.5 shrink-0" />
@@ -57,12 +57,12 @@ const ResearchSection = () => {
                 <h4 className="font-bold text-foreground mb-4">Performance Results:</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-background/50 border border-border rounded-xl p-6">
-                    <div className="text-3xl font-bold text-primary mb-2">100%</div>
+                    <div className="text-3xl font-bold text-primary mb-2">99.6%</div>
                     <div className="text-sm text-muted-foreground">AUROC on MVTec AD Benchmark</div>
                   </div>
                   <div className="bg-background/50 border border-border rounded-xl p-6">
-                    <div className="text-3xl font-bold text-primary mb-2">6M</div>
-                    <div className="text-sm text-muted-foreground">Parameters (~35% fewer than SOTA)</div>
+                    <div className="text-3xl font-bold text-primary mb-2">5.9M</div>
+                    <div className="text-sm text-muted-foreground">Parameters (35% fewer than SOTA)</div>
                   </div>
                 </div>
               </div>

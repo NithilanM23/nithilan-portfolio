@@ -210,8 +210,9 @@ const Navbar = () => {
             <Tooltip>
               <TooltipTrigger asChild>
                 <motion.a
-                  href="/resume.pdf"
-                  download
+                  href="https://drive.google.com/file/d/1zXFpiOLWb9D-thHGlO7pnbIcyuE0jK2p/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.6, type: "tween", duration: 0.2 }}
@@ -277,7 +278,12 @@ const Navbar = () => {
                   transition={{ delay: 0.3 }}
                   className="px-2 pt-4"
                 >
-                  <Button variant="hero" className="w-full" size="sm">
+                  <Button 
+                    variant="hero" 
+                    className="w-full" 
+                    size="sm"
+                    onClick={() => window.open('https://drive.google.com/file/d/1zXFpiOLWb9D-thHGlO7pnbIcyuE0jK2p/view?usp=sharing', '_blank')}
+                  >
                     <Download className="w-4 h-4" />
                     Download Resume
                   </Button>
