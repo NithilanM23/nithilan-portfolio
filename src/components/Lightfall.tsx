@@ -283,6 +283,9 @@ const Lightfall: React.FC<LightfallProps> = ({
     let lastWidth = 0;
     const resize = () => {
       const rect = container.getBoundingClientRect();
+      // Prevent WebGL crash if container is 0 size (e.g., display none or scrolled out of view in some browsers)
+      if (rect.width === 0 || rect.height === 0) return;
+      
       // Only resize if width changes or on initial load to avoid mobile scroll crash
       if (lastWidth > 0 && Math.abs(rect.width - lastWidth) < 10) return;
       lastWidth = rect.width;

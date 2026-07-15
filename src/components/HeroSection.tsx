@@ -209,8 +209,8 @@ const HeroSection = () => {
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/10" />
 
-      {/* Lightfall 3D Background */}
-      <div className="absolute inset-0 z-0 pointer-events-auto">
+      {/* Lightfall 3D Background - Disabled on mobile due to WebKit compositing crashes */}
+      <div className="absolute inset-0 z-0 pointer-events-auto hidden md:block">
         <AnimatePresence>
           {mountBackground && (
             <motion.div
@@ -220,8 +220,8 @@ const HeroSection = () => {
               className="absolute inset-0 w-full h-full"
             >
               <Lightfall
-                colors={['#cd6a00ff', '#a95700ff', '#cd6a00ff']} // Pure white, vibrant orange, and deep rose/red
-                backgroundColor="#cd6a00ff" // Restored to a clean orange glow
+                colors={['#cd6a00ff', '#a95700ff', '#cd6a00ff']} 
+                backgroundColor="#cd6a00ff" 
                 speed={0.3}
                 streakCount={1}
                 density={0.5}
